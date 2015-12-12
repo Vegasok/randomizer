@@ -1,0 +1,17 @@
+body{
+    margin: 15px 20px;
+}
+#value{
+    font-size: 20px;
+}
+
+label{
+    font-size: 20px;
+    color: brown;
+    text-decoration: underline;
+}
+
+div{
+    display: block;
+    margin: 10px;
+}
