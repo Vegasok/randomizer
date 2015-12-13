@@ -1,51 +1,64 @@
-    var total = [],
-        canAddValue = true,
-        MAX_OUTPUT = 10,
-        value = document.getElementById("value"),
-        allValues = document.getElementById("allValues"),
-        nouns = ['Dog', 'Programmer', 'Chair', 'Book', 'Table'],
-        adjective = ['Soft', 'Clever', 'Kind', 'Angry', 'Clean'];
+;(function(){
 
-    function randomValue(length){
+    function CreateRandomizer(){
+        var self = this;
+        this.total = [];
+        this.randomWord = document.getElementById("randomWord");
+        this.canAddValue = true;
+        this.MAX_OUTPUT = 10;
+        this.value = document.getElementById("value");
+        this.allValues = document.getElementById("allValues");
+        this.nouns = ['Dog', 'Programmer', 'Chair', 'Book', 'Table'];
+        this.adjective = ['Soft', 'Clever', 'Kind', 'Angry', 'Clean'];
+        this.randomWord.addEventListener("click", function(){
+            self.randomizer();
+        });
+
+    }
+
+
+    CreateRandomizer.prototype.randomValue = function(length){
         return Math.floor(Math.random() * length);
     };
 
-    function renderHTML(id, text){
+    CreateRandomizer.prototype.renderHTML = function(id, text){
         id.innerHTML = text;
     };
 
-    function randomizer(){
+    CreateRandomizer.prototype.randomizer = function(){
 
     var result,
-        nounsLength = nouns.length,
-        adjectiveLength = adjective.length,
+        nounsLength = this.nouns.length,
+        adjectiveLength = this.adjective.length,
 
-        randomNoun = randomValue(nounsLength),
-        randomAdjective = randomValue(adjectiveLength);
+        randomNoun = this.randomValue(nounsLength),
+        randomAdjective = this.randomValue(adjectiveLength);
 
-            result = nouns[randomNoun] + adjective[randomAdjective];
+            result = this.nouns[randomNoun] + this.adjective[randomAdjective];
 
-            if(total.length) {
-                canAddValue = total.every(function (name) {
+            if(this.total.length) {
+                this.canAddValue = this.total.every(function (name) {
                     return name !== result;
                 });
             }
 
-            if (canAddValue) {
-                if (total.length === MAX_OUTPUT) {
-                    total.shift();
-                    total.push(result)
+            if (this.canAddValue) {
+                if (this.total.length === this.MAX_OUTPUT) {
+                    this.total.shift();
+                    this.total.push(result)
                 } else {
-                    total.push(result)
+                    this.total.push(result)
                 }
             } else {
-                randomizer();
+                this.randomizer();
             }
 
 
-            renderHTML(value, result);
-            renderHTML(allValues, total.join('<br/>'));
-    }
+            this.renderHTML(this.value, result);
+            this.renderHTML(this.allValues, this.total.join('<br/>'));
+
+    };
 
 
-
+    var createRandomizer = new CreateRandomizer();
+}());
